@@ -29,6 +29,8 @@
 *.dylib
 
 # Executables
+serv
+cli
 *exe
 *.out
 *.app

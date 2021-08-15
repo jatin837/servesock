@@ -5,7 +5,8 @@
 #include <netinet/in.h>
 
 int main(void) {
-	// The Socket Discriptor
+	
+	char serv_msg[256] = "You contacted The server?";
 	int net_sock;
 	//Creating Socket
 	net_sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -16,26 +17,22 @@ int main(void) {
 	serv_addr.sin_port = htons(9002);
 	serv_addr.sin_addr.s_addr = INADDR_ANY;
 
-	int conn_status = connect(
+
+	bind(
 				net_sock,
 				(struct sockaddr *) &serv_addr,
 				sizeof(serv_addr)
-			);
+		);
 
-	if (conn_status == -1)
-		printf("ERROR WHILE CONNECTING\n");
+	listen(
+			net_sock,
+			5
+		);
 
-	char serv_res[256];
+	int client_sock;
+	client_sock = accept(net_sock, NULL, NULL);
 
-	recv(
-				net_sock,
-				&serv_res,
-				sizeof(serv_res),
-				0
-			);
-
-	// print out the server's response
-	printf("The server sent the data:  %s\n", serv_res);
+	send(client_sock, serv_msg, sizeof(serv_msg), 0);
 	
 	// close the socket connection
 	close(net_sock);
