@@ -33,6 +33,9 @@ int main(void) {
 		int client_sock;
 		client_sock = accept(net_sock, NULL, NULL);
 
+		if (client_sock < 0)
+			printf("connected");
+
 		send(client_sock, serv_msg, sizeof(serv_msg), 0);
 	}
 	
