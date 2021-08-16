@@ -29,10 +29,12 @@ int main(void) {
 			5
 		);
 
-	int client_sock;
-	client_sock = accept(net_sock, NULL, NULL);
+	while(1){
+		int client_sock;
+		client_sock = accept(net_sock, NULL, NULL);
 
-	send(client_sock, serv_msg, sizeof(serv_msg), 0);
+		send(client_sock, serv_msg, sizeof(serv_msg), 0);
+	}
 	
 	// close the socket connection
 	close(net_sock);
